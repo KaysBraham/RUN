@@ -6,7 +6,7 @@
          version="5.0">
     <servlet>
         <servlet-name>helloWorldServlet</servlet-name>
-        <servlet-class>com.example.run.HelloWorldServlet</servlet-class>
+        <servlet-class>com.example.run.ProduitsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>helloWorldServlet</servlet-name>
