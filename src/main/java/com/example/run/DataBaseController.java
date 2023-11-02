@@ -120,5 +120,50 @@ public class DataBaseController {
 
         return produits;
     }
+    public Produit getProductById(int productId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM produit WHERE ID_Produit=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, productId);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Produit produit = new Produit();
+                    produit.setId(resultSet.getInt("ID_Produit"));
+                    produit.setNom(resultSet.getString("nom"));
+                    produit.setMarque(resultSet.getString("marque"));
+                    produit.setDescription(resultSet.getString("description"));
+                    produit.setPrix(resultSet.getString("prix"));
+                    produit.setUrlPicture(resultSet.getString("urlPicture"));
+                    return produit;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return null; // Si aucun produit correspondant à l'ID n'est trouvé.
+    }
 }
