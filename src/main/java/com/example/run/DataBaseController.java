@@ -39,20 +39,20 @@ public class DataBaseController {
         }
     }
 
-    public boolean insertClient(String nom, String prenom, String email, String motDePasse, int soldeCB) {
+    public boolean insertClient(String nom, String prenom, String email, String motDePasse, boolean verifSolde) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
             connection = connectToDatabase();
             if (connection != null) {
-                String query = "INSERT INTO client (Nom, Prenom, Email, `Mot de passe`, `Solde CB`) VALUES (?, ?, ?, ?, ?)";
+                String query = "INSERT INTO client (nom, prenom, email, motDePasse, verifSolde) VALUES (?, ?, ?, ?, ?)";
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, nom);
                 preparedStatement.setString(2, prenom);
                 preparedStatement.setString(3, email);
                 preparedStatement.setString(4, motDePasse);
-                preparedStatement.setInt(5, soldeCB);
+                preparedStatement.setBoolean(5, verifSolde);
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 return rowsAffected > 0;
@@ -90,10 +90,10 @@ public class DataBaseController {
                 while (resultSet.next()) {
                     Produit produit = new Produit();
                     produit.setId(resultSet.getInt("ID_Produit"));
-                    produit.setNom(resultSet.getString("Nom"));
-                    produit.setMarque(resultSet.getString("Marque"));
-                    produit.setDescription(resultSet.getString("Description"));
-                    produit.setPrix(resultSet.getString("Prix"));
+                    produit.setNom(resultSet.getString("nom"));
+                    produit.setMarque(resultSet.getString("marque"));
+                    produit.setDescription(resultSet.getString("description"));
+                    produit.setPrix(resultSet.getString("prix"));
                     produit.setUrlPicture(resultSet.getString("urlPicture"));
                     produits.add(produit);
                 }
