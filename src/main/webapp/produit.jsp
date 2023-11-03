@@ -10,17 +10,35 @@
     <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
+<nav class="bg-white  fixed w-full z-20 top-0 left-0 border-b border-gray-200 ">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="#" class="flex items-center">
             <img src="https://i.ibb.co/JtpTTFt/run-black.png" class="h-8 mr-3" alt="Run Logo">
         </a>
+        <div class="flex md:order-2">
+            <button type="button" class="text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 ">Se Connecter</button>
+
+        </div>
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+                <li>
+                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0" aria-current="page">Sneakers</a>
+                </li>
+                <li>
+                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Bottes</a>
+                </li>
+                <li>
+                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Accessoires</a>
+                </li>
+                <li>
+                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Contact</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="min-h-screen bg-gray-100 flex flex-col py-20 px-20">
 
-    <div class="relative m-3 flex flex-wrap mx-auto justify-center">
         <%
             String productId = request.getParameter("id");
 
@@ -32,17 +50,73 @@
                 if (produit != null) {
         %>
 
-        <div class="relative max-w-sm min-w-[340px] bg-white shadow-md rounded-3xl p-2 mx-1 my-3 cursor-pointer">
-            <div class="overflow-x-hidden rounded-2xl relative">
-                <img class="h-40 rounded-2xl w-full object-cover" src="<%= produit.getUrlPicture() %>">
+
+
+
+        <div class="bg-gray-700 lg:h-screen">
+        <section class="text-gray-700 overflow-hidden bg-gray-100 lg:h-screen">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="lg:w-4/5 mx-auto flex flex-wrap">
+                    <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded-2xl border border-gray-200" src="<%= produit.getUrlPicture() %>">
+                    <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                        <h2 class="text-sm title-font text-gray-500 tracking-widest"><%= produit.getMarque() %></h2>
+                        <h1 class="py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline text-3xl"><%= produit.getNom() %></h1>
+                        <div class="flex mb-4">
+              <span class="flex items-center">
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-900" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-900" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-900" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-900" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-900" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <span class="text-gray-600 ml-3">4 Avis</span>
+              </span>
+
+                        </div>
+                        <p class="leading-relaxed"><%= produit.getDescription() %></p>
+                        <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+
+                            <div class="flex items-center">
+                                <span class="mr-3">Size</span>
+                                <div class="relative">
+                                    <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
+                                        <option>42</option>
+                                        <option>43</option>
+                                        <option>45</option>
+                                        <option>46</option>
+                                    </select>
+                                    <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                      <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <span class="title-font font-medium text-2xl text-gray-900"><%= produit.getPrix() %>€</span>
+                            <button class="flex ml-auto text-white bg-gray-900 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 rounded">Ajouter au panier</button>
+                            <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mt-4 pl-2 mb-2">
-                <p class="text-lg font-semibold text-gray-900 mb-0"><%= produit.getNom() %></p>
-                <p class="text-md text-gray-800 mt-0"><%= produit.getMarque() %></p>
-                <p class="text-md text-gray-800 mt-0"><%= produit.getDescription() %></p>
-                <p class="text-md text-gray-800 mt-0"><%= produit.getPrix() %>€</p>
-            </div>
-        </div>
+        </section>
+
+
 
         <%
         } else {
@@ -60,8 +134,9 @@
         <%
             }
         %>
-    </div>
-</div>
+
+        </div>
+
 
 </body>
 </html>
