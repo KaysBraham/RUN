@@ -24,7 +24,7 @@
                 <img src="https://i.ibb.co/JtpTTFt/run-black.png" class="text-center mb-4 w-1/2" alt="Run Logo">
                 <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">Se connecter</h1>
                 <p class="w-80 text-center text-sm mb-8 font-semibold text-gray-700 tracking-wide cursor-pointer">Connectez-vous
-                    pour bénéficier d'avantages exclusifs</p>
+                    pour bénéficier des avantages exclusifs</p>
             </div>
             <div class="max-w-4xl mx-auto z-4 mb-2" id="erreur" style="display: none;">
                 <div class="bg-red-50 border-l-8 border-red-900">
