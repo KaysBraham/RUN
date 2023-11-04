@@ -44,15 +44,12 @@
         <span></span> <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline">Sneakers</span>
     </h1>
 
-    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mx-auto justify-center ">
-
-
+    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto justify-center ">
         <%
             List<Produit> produits = (List<Produit>) request.getAttribute("produits");
             for (Produit produit : produits) {
         %>
-
-        <div class="relative w-40 h-90 bg-white shadow-md rounded-3xl p-2 cursor-pointer">
+        <div class="relative w-44 h-99 bg-white shadow-md rounded-3xl p-2">
             <div class="overflow-x-hidden rounded-2xl relative">
                 <a href="produit.jsp?id=<%= produit.getId() %>">
                 <img class="h-40 w-40 rounded-2xl object-cover m-0" src="<%= produit.getUrlPicture() %>"></a>
@@ -64,7 +61,9 @@
             </div>
             <div class="mt-4 pl-2 mb-2 flex justify-between ">
                 <div>
+                    <a href="produit.jsp?id=<%= produit.getId() %>">
                     <p class="text-lg font-semibold text-gray-900 mb-0 overflow-hidden max-h-16"><%= produit.getNom() %></p>
+                    </a>
                     <p class="text-md text-gray-800 mt-0 overflow-hidden max-h-10"><%= produit.getPrix() %>€</p>
                 </div>
                 <div class="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
@@ -74,14 +73,9 @@
                 </div>
             </div>
         </div>
-
         <%
             }
         %>
-
-
-
-
     </div>
 </div>
 
