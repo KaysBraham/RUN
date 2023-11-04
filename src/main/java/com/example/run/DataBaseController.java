@@ -166,4 +166,74 @@ public class DataBaseController {
 
         return null; // Si aucun produit correspondant à l'ID n'est trouvé.
     }
+
+
+    public boolean checkLogin(String email, String motDePasse) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM client WHERE email = ? AND motDePasse = ?";
+        try (Connection conn = connectToDatabase();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, motDePasse);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getUserIdFromDatabase(String email) throws SQLException {
+        String sql = "SELECT ID_Client FROM client WHERE email = ?";
+        try (Connection conn = connectToDatabase();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("ID_Client");
+                }
+            }
+        }
+        return -1; // Retourne -1 si l'utilisateur n'a pas été trouvé dans la base de données
+    }
+
+    public boolean register(String prenom, String nom, String email, String motDePasse) {
+        // Assurez-vous d'adapter les détails de votre base de données
+        String selectSQL = "SELECT COUNT(*) FROM client WHERE email = ?";
+        String insertSQL = "INSERT INTO client (nom, prenom, email, motDePasse) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = connectToDatabase();
+             PreparedStatement selectStatement = connection.prepareStatement(selectSQL);
+             PreparedStatement insertStatement = connection.prepareStatement(insertSQL)) {
+
+
+            selectStatement.setString(1, email);
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next() && resultSet.getInt(1) == 0) {
+
+                insertStatement.setString(1, nom);
+                insertStatement.setString(2, prenom);
+                insertStatement.setString(3, email);
+                insertStatement.setString(4, motDePasse);
+
+
+                int rowsAffected = insertStatement.executeUpdate();
+
+
+                return rowsAffected == 1;
+            } else {
+
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
 }
