@@ -27,7 +27,7 @@
 
 
 
-        <div class="bg-gray-700 lg:h-screen">
+        <div class="bg-gray-500 lg:h-screen">
         <section class="text-gray-700 overflow-hidden bg-gray-100 lg:h-screen">
             <div class="container px-5 py-24 mx-auto">
                 <div class="lg:w-4/5 mx-auto flex flex-wrap">
@@ -89,6 +89,8 @@
                 </div>
             </div>
         </section>
+
+            <%@include file="cart.jsp" %>
 
 
 
