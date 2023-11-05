@@ -90,6 +90,7 @@
             </div>
         </section>
 
+            <%@include file="cart.jsp" %>
 
 
         <%
