@@ -1,4 +1,8 @@
 package com.example.run;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
+import javax.management.Query;
 import java.io.*;
 
 import java.sql.Connection;
@@ -8,13 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class DataBaseController {
 
 
     public Connection connectToDatabase() {
         String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "";
 
         Connection connection = null;
 
@@ -166,4 +171,54 @@ public class DataBaseController {
 
         return null; // Si aucun produit correspondant à l'ID n'est trouvé.
     }
-}
+
+
+
+    public Produit getProductByKeyWord(String keyWord) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM produit WHERE motCles '%keyWord%' ";
+                preparedStatement = connection.prepareStatement(query);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Produit produit = new Produit();
+                    produit.setId(resultSet.getInt("ID_Produit"));
+                    produit.setNom(resultSet.getString("nom"));
+                    produit.setMarque(resultSet.getString("marque"));
+                    produit.setDescription(resultSet.getString("description"));
+                    produit.setPrix(resultSet.getString("prix"));
+                    produit.setMotCles(resultSet.getString("motCles"));
+                    produit.setUrlPicture(resultSet.getString("urlPicture"));
+                    return produit;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return null; // Si aucun produit correspondant à la recherche
+    }
+    }
+

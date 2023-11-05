@@ -5,6 +5,8 @@ public class Produit {
     private String marque;
     private String description;
     private String prix;
+
+    private String motCles;
     private String urlPicture;
 
     public int getId() {
@@ -54,4 +56,9 @@ public class Produit {
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
     }
+
+    public String getMotCles() { return motCles; }
+
+    public void setMotCles(String motCles) { this.motCles= motCles; }
+
 }
