@@ -54,6 +54,8 @@
 </div>
 
 
+<%@include file="cart.jsp" %>
+
 
 </body>
 </html>
