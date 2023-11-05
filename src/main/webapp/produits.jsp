@@ -10,36 +10,7 @@
     <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="bg-white  fixed w-full z-20 top-0 left-0 border-b border-gray-200 ">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#" class="flex items-center">
-            <img src="https://i.ibb.co/JtpTTFt/run-black.png" class="h-8 mr-3" alt="Run Logo">
-        </a>
-        <div class="flex md:order-2">
-            <button type="button" class="text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 ">Se Connecter</button>
-
-        </div>
-        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-                <li>
-                    <a href="accueil.jsp" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0" aria-current="page">Accueil</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0" aria-current="page">Sneakers</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Bottes</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Accessoires</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<%@include file="header.jsp" %>
 
 <div class="min-h-screen bg-gray-100 flex flex-col py-20 px-20">
 
@@ -47,15 +18,12 @@
         <span></span> <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline">Sneakers</span>
     </h1>
 
-    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mx-auto justify-center ">
-
-
+    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto justify-center ">
         <%
             List<Produit> produits = (List<Produit>) request.getAttribute("produits");
             for (Produit produit : produits) {
         %>
-
-        <div class="relative w-40 h-90 bg-white shadow-md rounded-3xl p-2 cursor-pointer">
+        <div class="relative w-44 h-99 bg-white shadow-md rounded-3xl p-2">
             <div class="overflow-x-hidden rounded-2xl relative">
                 <a href="produit.jsp?id=<%= produit.getId() %>">
                 <img class="h-40 w-40 rounded-2xl object-cover m-0" src="<%= produit.getUrlPicture() %>"></a>
@@ -67,7 +35,9 @@
             </div>
             <div class="mt-4 pl-2 mb-2 flex justify-between ">
                 <div>
+                    <a href="produit.jsp?id=<%= produit.getId() %>">
                     <p class="text-lg font-semibold text-gray-900 mb-0 overflow-hidden max-h-16"><%= produit.getNom() %></p>
+                    </a>
                     <p class="text-md text-gray-800 mt-0 overflow-hidden max-h-10"><%= produit.getPrix() %>€</p>
                 </div>
                 <div class="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
@@ -88,6 +58,8 @@
     </div>
 </div>
 
+
+<%@include file="cart.jsp" %>
 
 
 </body>
