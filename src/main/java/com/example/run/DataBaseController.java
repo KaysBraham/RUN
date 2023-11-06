@@ -279,4 +279,52 @@ public class DataBaseController {
             return false;
         }
     }
+
+    public List<VarianteProduit> getVariantesByProductId(int productId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<VarianteProduit> variantes = new ArrayList<>();
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM variantes_produit WHERE id_produit = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, productId);
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    VarianteProduit variante = new VarianteProduit(
+                            resultSet.getInt("ID_Variante"),
+                            resultSet.getInt("id_produit"),
+                            resultSet.getInt("pointure"),
+                            resultSet.getInt("stock")
+                    );
+                    variantes.add(variante);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return variantes;
+    }
+
 }

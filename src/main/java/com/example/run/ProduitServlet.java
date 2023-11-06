@@ -1,6 +1,7 @@
 package com.example.run;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,5 +26,8 @@ public class ProduitServlet extends HttpServlet {
 
         // Dirigez vers la page produit.jsp
         request.getRequestDispatcher("/produit.jsp").forward(request, response);
+
+        List<VarianteProduit> variantes = controller.getVariantesByProductId(Integer.parseInt(productId));
+        request.setAttribute("variantes", variantes);
     }
 }
