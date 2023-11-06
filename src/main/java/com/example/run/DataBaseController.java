@@ -297,7 +297,7 @@ public class DataBaseController {
                 while (resultSet.next()) {
                     VarianteProduit variante = new VarianteProduit(
                             resultSet.getInt("ID_Variante"),
-                            resultSet.getInt("id_produit"),
+                            resultSet.getInt("ID_produit"),
                             resultSet.getInt("pointure"),
                             resultSet.getInt("stock")
                     );

@@ -72,7 +72,7 @@
                                 <div class="relative">
                                     <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-gray-900 text-base pl-3 pr-10">
                                         <% for (int i = 0; i < varianteProduit.size(); i++) { %>
-                                            <option> <%= varianteProduit.get(i).getPointure() %>  (Stock : <%= varianteProduit.get(i).getStock() %><</option>
+                                            <option> <%= varianteProduit.get(i).getPointure() %>  (Stock : <%= varianteProduit.get(i).getStock() %>)</option>
                                         <%}%>
                                     </select>
                                     <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
