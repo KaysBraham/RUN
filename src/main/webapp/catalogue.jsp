@@ -20,8 +20,8 @@
 
     <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto justify-center ">
         <%
-            List<Produit> produits = (List<Produit>) request.getAttribute("produits");
-            for (Produit produit : produits) {
+            List<Produit> catalogue = (List<Produit>) request.getAttribute("catalogue");
+            for (Produit produit : catalogue) {
         %>
         <div class="relative w-44 h-99 bg-white shadow-md rounded-3xl p-2">
             <div class="overflow-x-hidden rounded-2xl relative">

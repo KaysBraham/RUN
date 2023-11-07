@@ -8,12 +8,12 @@
         <welcome-file>accueil.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
-        <servlet-name>ProduitsServlet</servlet-name>
+        <servlet-name>CatalogueServlet</servlet-name>
         <servlet-class>com.example.run.CatalogueServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ProduitsServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>CatalogueServlet</servlet-name>
+        <url-pattern>/catalogue</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
