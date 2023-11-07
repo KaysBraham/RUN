@@ -1,14 +1,26 @@
+<%@ page import="com.example.run.Panier" %>
+<%@ page import="java.util.Map" %>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<%
+  Panier panier = (Panier) session.getAttribute("panier");
+
+  if (panier == null) {
+    panier = new Panier();
+    session.setAttribute("panier", panier);
+  }
+%>
+
+
 
 <div data-dial-init class="fixed right-6 bottom-6 group">
 
   <button type="button" onClick="afficherPanier()" data-dial-toggle="speed-dial-menu-dropdown-alternative-square" aria-controls="speed-dial-menu-dropdown-alternative-square" aria-expanded="false" class="flex items-center justify-center ml-auto text-white bg-gray-900 rounded-lg w-14 h-14 hover:bg-gray-700 focus:ring-4 focus:ring-gray-500 focus:outline-none border border-white">
     <img src="https://i.postimg.cc/BZHf7V07/pngegg-blanc.png" class=' w-8/12' />
 
-    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 ">1</div>
+    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 "><%= panier.getContenu().size() %></div>
   </button>
 </div>
-
 
 
 
@@ -46,15 +58,21 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
             <tbody class="divide-y divide-gray-100 text-sm">
             <!-- record 1 -->
+            <%
+              for (Map.Entry<Integer, Integer> entry : panier.getContenu().entrySet()) {
+                int idVariante = entry.getKey();
+                int quantite = entry.getValue();
+            %>
             <tr>
+
               <td class="p-2">
                 <input type="checkbox" class="h-5 w-5" value="id-1" @click="toggleCheckbox($el, 2890.66)" />
               </td>
               <td class="p-2">
-                <div class="font-medium text-gray-800">chaussure</div>
+                <div class="font-medium text-gray-800"><%= idVariante %></div>
               </td>
               <td class="p-2">
-                <div class="text-left">1</div>
+                <div class="text-left"><%= quantite %></div>
               </td>
               <td class="p-2">
                 <div class="text-left font-medium text-gray-900 font-bold">200 </div>
@@ -71,37 +89,13 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
                   </button>
                 </div>
               </td>
-            </tr>
 
-            <!-- record 2 -->
-            <tr>
-              <td class="p-2">
-                <input type="checkbox" class="h-5 w-5" value="id-2" @click="toggleCheckbox($el, 120.50)" />
-              </td>
-              <td class="p-2">
-                <div>
-                  <div class="font-medium text-gray-800">chaussure</div>
-                </div>
-              </td>
-              <td class="p-2">
-                <div class="text-left">1</div>
-              </td>
-              <td class="p-2">
-                <div class="text-left font-medium text-gray-900 font-bold">200</div>
-              </td>
-              <td class="p-2">
-                <div class="flex justify-center">
-                  <button>
-                    <svg class="h-8 w-8 rounded-full p-1 hover:bg-gray-100 hover:text-blue-600" fill="none"
-                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                      </path>
-                    </svg>
-                  </button>
-                </div>
-              </td>
             </tr>
+            <%
+              }
+            %>
+
+
             </tbody>
           </table>
         </div>
