@@ -98,7 +98,7 @@
             </div>
         </section>
 
-            <%@include file="cart.jsp" %>
+
 
 
         <%
@@ -120,6 +120,8 @@
 
         </div>
 
+<%@include file="cart.jsp" %>
+
 <script>
     document.getElementById('ajouterAuPanierButton').addEventListener('click', function() {
         var idVariante = document.getElementById('pointureDropdown').value; // Obtenez l'ID de la variante sélectionnée
@@ -135,6 +137,7 @@
                 console.log("Code d'état HTTP : " + xhr.status); // Affichez le code d'état HTTP dans la console
                 if (xhr.status === 200) {
                     console.log("Action effectuée avec succès");
+                    location.reload();
                 } else if (xhr.status === 400) {
                     console.log("Erreur : Requête incorrecte (code d'état 400)");
                 } else {
@@ -146,5 +149,7 @@
     });
 
 </script>
+
+
 </body>
 </html>
