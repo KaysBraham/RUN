@@ -289,7 +289,7 @@ public class DataBaseController {
         try {
             connection = connectToDatabase();
             if (connection != null) {
-                String query = "SELECT * FROM variantes_produit WHERE id_produit = ?";
+                String query = "SELECT * FROM variantes_produit WHERE id_produit = ? ORDER BY pointure ASC;";
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setInt(1, productId);
                 resultSet = preparedStatement.executeQuery();
