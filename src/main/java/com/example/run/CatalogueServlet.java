@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ProduitsServlet", value = "/produits")
-public class ProduitsServlet extends HttpServlet {
+@WebServlet(name = "CatalogueServlet", value = "/catalogue")
+public class CatalogueServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DataBaseController controller = new DataBaseController();
-        List<Produit> produits = controller.getAllProducts();
+        List<Produit> catalogue = controller.getCatalogue();
 
-        request.setAttribute("produits", produits);
+        request.setAttribute("catalogue", catalogue);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/produits.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/catalogue.jsp");
         dispatcher.forward(request, response);
     }
 }

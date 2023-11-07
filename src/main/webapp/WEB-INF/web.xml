@@ -9,7 +9,7 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>ProduitsServlet</servlet-name>
-        <servlet-class>com.example.run.ProduitsServlet</servlet-class>
+        <servlet-class>com.example.run.CatalogueServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProduitsServlet</servlet-name>

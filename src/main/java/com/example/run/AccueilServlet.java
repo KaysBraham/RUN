@@ -25,10 +25,8 @@ public class AccueilServlet extends HttpServlet {
         request.setAttribute("produit", produit);
         request.getRequestDispatcher("/produit.jsp").forward(request, response);
 
-        List<Produit> produits = controller.getAllProducts();
-        request.setAttribute("produits", produits);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/produits.jsp");
-        dispatcher.forward(request, response);
+        List<Produit> catalogue = controller.getCatalogue();
+        request.setAttribute("catalogue", catalogue);
+        request.getRequestDispatcher("/catalogue.jsp").forward(request, response);
     }
     }

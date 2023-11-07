@@ -74,11 +74,11 @@ public class DataBaseController {
     }
 
 
-    public List<Produit> getAllProducts() {
+    public List<Produit> getCatalogue() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Produit> produits = new ArrayList<>();
+        List<Produit> catalogue = new ArrayList<>();
 
         try {
             connection = connectToDatabase();
@@ -95,7 +95,7 @@ public class DataBaseController {
                     produit.setDescription(resultSet.getString("description"));
                     produit.setPrix(resultSet.getString("prix"));
                     produit.setUrlPicture(resultSet.getString("urlPicture"));
-                    produits.add(produit);
+                    catalogue.add(produit);
                 }
             }
         } catch (SQLException e) {
@@ -118,7 +118,7 @@ public class DataBaseController {
             closeConnection(connection);
         }
 
-        return produits;
+        return catalogue;
     }
     public Produit getProductById(int productId) {
         Connection connection = null;
