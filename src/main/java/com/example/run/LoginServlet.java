@@ -36,10 +36,10 @@ public class LoginServlet extends HttpServlet {
                 if (userID != -1) {
                     HttpSession session = request.getSession();
                     session.setAttribute("userID", userID);
-                    List<Produit> produits = databaseController.getCatalogue();
+                    List<Produit> catalogue = databaseController.getCatalogue();
 
                     // Ajoutez la liste des produits à la requête pour les afficher dans catalogue.jsp
-                    request.setAttribute("produits", produits);
+                    request.setAttribute("catalogue", catalogue);
 
                     // Redirigez vers la page catalogue.jsp
                     RequestDispatcher dispatcher = request.getRequestDispatcher("catalogue.jsp");
