@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <div class="flex">
-                            <span class="title-font font-medium text-2xl text-gray-900"><%= produit.getPrix() %>€</span>
+                            <span class="title-font font-medium text-2xl text-gray-900"><%= produit.getPrix() %> €</span>
                             <button class="flex ml-auto text-white bg-gray-900 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 rounded" id="ajouterAuPanierButton">Ajouter au panier</button>
                             <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                 <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">

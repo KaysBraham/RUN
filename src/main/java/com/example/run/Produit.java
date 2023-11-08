@@ -57,8 +57,8 @@ public class Produit {
         this.urlPicture = urlPicture;
     }
 
-    public String getMotCles() { return motCles; }
+    public String getMotsCles() { return motCles; }
 
-    public void setMotCles(String motCles) { this.motCles= motCles; }
+    public void setMotsCles(String motCles) { this.motCles= motCles; }
 
 }

@@ -14,7 +14,7 @@ public class DataBaseController {
     public Connection connectToDatabase() {
         String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "";
 
         Connection connection = null;
 
@@ -166,7 +166,9 @@ public class DataBaseController {
 
         return null; // Si aucun produit correspondant à l'ID n'est trouvé.
     }
-    public Produit getProductByKeyWord(String keyWord) {
+    public List<Produit> getProductBySearch(String search) {
+
+        List<Produit> produits = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -174,21 +176,26 @@ public class DataBaseController {
         try {
             connection = connectToDatabase();
             if (connection != null) {
-                String query = "SELECT * FROM produit WHERE motCles '%keyWord%' ";
+                String query = "SELECT * FROM produit WHERE nom LIKE ? OR motsCles LIKE ? OR marque LIKE ?";
                 preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, "%" + search + "%");
+                preparedStatement.setString(2, "%" + search + "%");
                 resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     Produit produit = new Produit();
                     produit.setId(resultSet.getInt("ID_Produit"));
                     produit.setNom(resultSet.getString("nom"));
                     produit.setMarque(resultSet.getString("marque"));
                     produit.setDescription(resultSet.getString("description"));
+                    produit.setMotsCles(resultSet.getString("motsCles"));
                     produit.setPrix(resultSet.getString("prix"));
-                    produit.setMotCles(resultSet.getString("motCles"));
                     produit.setUrlPicture(resultSet.getString("urlPicture"));
-                    return produit;
+
+                    produits.add(produit);
                 }
+
+                return produits;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -210,8 +217,9 @@ public class DataBaseController {
             closeConnection(connection);
         }
 
-        return null; // Si aucun produit correspondant à la recherche
+        return null; // Si aucun produit ne correspond à la recherche
     }
+
     public boolean checkLogin(String email, String motDePasse) throws SQLException {
         String sql = "SELECT COUNT(*) FROM client WHERE email = ? AND motDePasse = ?";
         try (Connection conn = connectToDatabase();
