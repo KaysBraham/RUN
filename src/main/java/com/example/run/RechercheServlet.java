@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 public class RechercheServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String motRecherche = request.getParameter("q");
+        String motRecherche = request.getParameter("recherche");
 
         if (motRecherche != null && !motRecherche.isEmpty()) {
             DataBaseController controller = new DataBaseController();
-            List<Produit> produitsRecherches = controller.getProductBySearch(motRecherche);
+            List<Produit> resultats = controller.getProductBySearch(motRecherche);
 
-            request.setAttribute("produits", produitsRecherches);
+            request.setAttribute("resultats", resultats);
         }
 
         request.getRequestDispatcher("/recherche.jsp").forward(request, response);

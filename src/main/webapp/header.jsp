@@ -29,7 +29,7 @@
         </div>
 
         <div class="md:order-3 md:w-auto w-full md:pl-0 md:ml-4 mt-4 md:mt-0">
-            <form action="recherche.jsp" method="get" class="relative">
+            <form action="recherche" method="get" class="relative">
                 <input type="text" name="recherche" class="w-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded-md py-2 pl-10 pr-4" placeholder="Rechercher...">
                 <button type="submit" class="absolute top-0 left-0 mt-2 ml-2">
                     <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">

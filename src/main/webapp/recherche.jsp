@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.example.run.Produit" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.run.DataBaseController" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,18 +10,15 @@
     <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-
-<header>
-    <%@include file="header.jsp" %>
-</header>
+<%@include file="header.jsp" %>
 
 <div class="min-h-screen bg-gray-100 flex flex-col py-20 px-20">
+
     <h1 class="mb-8 text-lg font-bold leading-none tracking-normal text-gray-500 md:text-2xl md:tracking-tight p-3 justify-center mx-auto">
-        <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline">
-            Résultats de la recherche pour "<%= request.getParameter("recherche") %>"
-        </span>
+        <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline">Résultats de la recherche pour "<%= request.getParameter("recherche") %>"</span>
     </h1>
 
+    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto justify-center ">
     <%
         List<Produit> resultats = (List<Produit>) request.getAttribute("resultats");
         if (resultats != null && !resultats.isEmpty()) {
@@ -62,6 +57,7 @@
     <%
         }
     %>
+    </div>
 </div>
 
 <%@include file="cart.jsp" %>

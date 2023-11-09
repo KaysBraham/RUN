@@ -180,6 +180,7 @@ public class DataBaseController {
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, "%" + search + "%");
                 preparedStatement.setString(2, "%" + search + "%");
+                preparedStatement.setString(3, "%" + search + "%");
                 resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
