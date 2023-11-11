@@ -408,7 +408,7 @@ public class DataBaseController {
         int pointure = 0;
 
         try {
-            conn =  connectToDatabase();// Obtenez la connexion à la base de données ici
+            conn =  connectToDatabase();
 
 
             String sql = "SELECT pointure FROM variantes_produit WHERE ID_Variante = ?";
@@ -429,6 +429,38 @@ public class DataBaseController {
 
         // Retournez -1 ou une valeur par défaut si l'ID du produit n'est pas trouvé
         return -1;
+    }
+
+    public Client getClientById(int clientId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Client client = null;
+
+        try {
+            connection = connectToDatabase();
+
+            String query = "SELECT * FROM client WHERE ID_Client = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, clientId);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                client = new Client();
+                client.setId(resultSet.getInt("ID_Client"));
+                client.setNom(resultSet.getString("nom"));
+                client.setPrenom(resultSet.getString("prenom"));
+                client.setEmail(resultSet.getString("email"));
+                client.setSoldeFidelite(resultSet.getInt("soldeFidelite"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gestion des erreurs
+        } finally {
+
+        }
+
+        return client;
     }
 
 }

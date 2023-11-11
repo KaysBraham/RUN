@@ -29,4 +29,8 @@ public class Panier {
     public Map<Integer, Integer> getContenu() {
         return items;
     }
+
+    public int getTailleDuPanier() {
+        return items.size();
+    }
 }

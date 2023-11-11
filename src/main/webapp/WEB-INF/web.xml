@@ -40,6 +40,14 @@
         <url-pattern>/AddToCartServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ViderPanierServlet</servlet-name>
+        <servlet-class>com.example.run.ViderPanierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViderPanierServlet</servlet-name>
+        <url-pattern>/ViderPanierServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>DeleteFromCartServlet</servlet-name>
         <servlet-class>com.example.run.DeleteFromCartServlet</servlet-class>
     </servlet>
