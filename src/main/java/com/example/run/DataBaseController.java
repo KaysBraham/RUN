@@ -14,7 +14,7 @@ public class DataBaseController {
     public Connection connectToDatabase() {
         String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
-        String dbPassword = "";
+        String dbPassword = "root";
 
         Connection connection = null;
 
@@ -334,6 +334,68 @@ public class DataBaseController {
         }
 
         return variantes;
+    }
+
+    public int getProductIdFromVarianteId(int idVariante)  {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int idProduit = 0;
+
+        try {
+            conn =  connectToDatabase();// Obtenez la connexion à la base de données ici
+
+            // Écrivez votre requête SQL pour récupérer l'ID du produit en fonction de l'ID de la variante
+            String sql = "SELECT ID_Produit FROM variantes_produit WHERE ID_Variante = ?";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idVariante);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                idProduit = resultSet.getInt("ID_Produit");
+                return idProduit;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérez les exceptions ici
+        }
+
+        // Retournez -1 ou une valeur par défaut si l'ID du produit n'est pas trouvé
+        return -1;
+    }
+
+    public int getPointureFromVarianteId(int idVariante)  {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int pointure = 0;
+
+        try {
+            conn =  connectToDatabase();// Obtenez la connexion à la base de données ici
+
+
+            String sql = "SELECT pointure FROM variantes_produit WHERE ID_Variante = ?";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idVariante);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                pointure = resultSet.getInt("pointure");
+                return pointure;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérez les exceptions ici
+        }
+
+        // Retournez -1 ou une valeur par défaut si l'ID du produit n'est pas trouvé
+        return -1;
     }
 
 }

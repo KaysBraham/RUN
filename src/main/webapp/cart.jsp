@@ -1,9 +1,13 @@
 <%@ page import="com.example.run.Panier" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.example.run.DataBaseController" %>
+<%@ page import="com.example.run.Produit" %>
+
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <%
   Panier panier = (Panier) session.getAttribute("panier");
+  DataBaseController controller2 = new DataBaseController();
 
   if (panier == null) {
     panier = new Panier();
@@ -45,6 +49,9 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
                 <div class="text-left font-semibold">Produit</div>
               </th>
               <th class="p-2">
+                <div class="text-left font-semibold">Pointure</div>
+              </th>
+              <th class="p-2">
                 <div class="text-left font-semibold">Quantite</div>
               </th>
               <th class="p-2">
@@ -59,9 +66,24 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
             <tbody class="divide-y divide-gray-100 text-sm">
             <!-- record 1 -->
             <%
+              int total = 0;
+
               for (Map.Entry<Integer, Integer> entry : panier.getContenu().entrySet()) {
                 int idVariante = entry.getKey();
                 int quantite = entry.getValue();
+
+
+                int idProduit = controller2.getProductIdFromVarianteId(idVariante);
+                int pointure = controller2.getPointureFromVarianteId(idVariante);
+
+                //int taille = controller
+                Produit produit2 = controller2.getProductById(idProduit);
+
+                if (produit2 != null) {
+
+                  int prix = quantite * Integer.parseInt(produit2.getPrix());
+                  total += prix;
+
             %>
             <tr>
 
@@ -69,13 +91,16 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
                 <input type="checkbox" class="h-5 w-5" value="id-1" @click="toggleCheckbox($el, 2890.66)" />
               </td>
               <td class="p-2">
-                <div class="font-medium text-gray-800"><%= idVariante %></div>
+                <div class="font-medium text-gray-800"><%= produit2.getNom() %></div>
+              </td>
+              <td class="p-2">
+                <div class="text-left"><%= pointure %></div>
               </td>
               <td class="p-2">
                 <div class="text-left"><%= quantite %></div>
               </td>
               <td class="p-2">
-                <div class="text-left font-medium text-gray-900 font-bold">200 </div>
+                <div class="text-left font-medium text-gray-900 font-bold"><%= prix %> Euros</div>
               </td>
               <td class="p-2">
                 <div class="flex justify-center">
@@ -92,6 +117,7 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
             </tr>
             <%
+                }
               }
             %>
 
@@ -102,7 +128,7 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
         <div class="flex justify-end space-x-4 border-t border-gray-100 px-5 py-4 text-2xl font-bold">
 
-          <div class="text-gray-900">120 Euros <span x-text="total.toFixed(2)"></span></div>
+          <div class="text-gray-900"><%= total %> Euros<span x-text="total.toFixed(2)"></span></div>
 
         </div>
 
