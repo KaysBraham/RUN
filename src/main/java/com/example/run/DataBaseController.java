@@ -336,6 +336,39 @@ public class DataBaseController {
         return variantes;
     }
 
+    public String getImageUrlFromProductId(int productId) {
+        String imageUrl = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectToDatabase();
+            String query = "SELECT urlPicture FROM produit WHERE ID_Produit = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, productId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                imageUrl = rs.getString("urlPicture");
+            }
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return imageUrl;
+    }
+
     public int getProductIdFromVarianteId(int idVariante)  {
         Connection conn = null;
         PreparedStatement preparedStatement = null;

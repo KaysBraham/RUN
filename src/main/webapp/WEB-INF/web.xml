@@ -40,6 +40,14 @@
         <url-pattern>/AddToCartServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>DeleteFromCartServlet</servlet-name>
+        <servlet-class>com.example.run.DeleteFromCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFromCartServlet</servlet-name>
+        <url-pattern>/DeleteFromCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RechercheServlet</servlet-name>
         <servlet-class>com.example.run.RechercheServlet</servlet-class>
     </servlet>

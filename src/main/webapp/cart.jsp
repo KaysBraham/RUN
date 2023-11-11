@@ -75,6 +75,7 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
                 int idProduit = controller2.getProductIdFromVarianteId(idVariante);
                 int pointure = controller2.getPointureFromVarianteId(idVariante);
+                String urlPicture = controller2.getImageUrlFromProductId(idProduit);
 
                 //int taille = controller
                 Produit produit2 = controller2.getProductById(idProduit);
@@ -85,10 +86,10 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
                   total += prix;
 
             %>
-            <tr>
+            <tr id="<%= idVariante %>">
 
               <td class="p-2">
-                <input type="checkbox" class="h-5 w-5" value="id-1" @click="toggleCheckbox($el, 2890.66)" />
+                <img class="h-10 w-10 rounded-xl" src="<%= urlPicture %>"/>
               </td>
               <td class="p-2">
                 <div class="font-medium text-gray-800"><%= produit2.getNom() %></div>
@@ -104,7 +105,7 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
               </td>
               <td class="p-2">
                 <div class="flex justify-center">
-                  <button>
+                  <button onclick="retirerDuPanier(<%= idVariante %>)">
                     <svg class="h-8 w-8 rounded-full p-1 hover:bg-gray-100 hover:text-blue-600" fill="none"
                          stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -128,7 +129,7 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
         <div class="flex justify-end space-x-4 border-t border-gray-100 px-5 py-4 text-2xl font-bold">
 
-          <div class="text-gray-900"><%= total %> Euros<span x-text="total.toFixed(2)"></span></div>
+
 
         </div>
 
@@ -163,6 +164,39 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
   function masquerPanier() {
     document.getElementById("resume").style.display = "none";
   }
+
+
+  function retirerDuPanier(idVariante) {
+
+      var element = document.getElementById(idVariante);
+      if (element) {
+          element.remove();
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'DeleteFromCartServlet', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            console.log("Code d'état HTTP : " + xhr.status); // Affichez le code d'état HTTP dans la console
+            if (xhr.status === 200) {
+              console.log("Action effectuée avec succès");
+            } else if (xhr.status === 400) {
+              console.log("Erreur : Requête incorrecte (code d'état 400)");
+            } else {
+              console.log("Erreur inconnue : Code d'état " + xhr.status);
+            }
+          }
+        };
+        xhr.send('idVariante=' + idVariante); // Supprimez "action=" de la requête
+
+      }
+
+
+  }
+
+
+
 
 
 
