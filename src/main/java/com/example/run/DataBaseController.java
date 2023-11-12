@@ -16,7 +16,7 @@ public class DataBaseController {
 
 
     public Connection connectToDatabase() {
-        String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
+        String dbUrl = "jdbc:mysql://localhost:8889/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
         String dbPassword = "root";
 
@@ -42,6 +42,484 @@ public class DataBaseController {
             }
         }
     }
+
+
+    public List<Moderateur> getModerateurs() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Moderateur> moderateurs = new ArrayList<>();
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM moderateur";
+                preparedStatement = connection.prepareStatement(query);
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    Moderateur moderateur = new Moderateur();
+                    moderateur.setId(resultSet.getInt("ID_Moderateur"));
+                    moderateur.setNom(resultSet.getString("nom"));
+                    moderateur.setPrenom(resultSet.getString("prenom"));
+                    moderateur.setEmail(resultSet.getString("email"));
+                    moderateur.setMotDePasse(resultSet.getString("motDePasse"));
+                    moderateurs.add(moderateur);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return moderateurs;
+    }
+
+    public Produit getProductByKeyWord(String keyWord) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM produit WHERE motCles '%keyWord%' ";
+                preparedStatement = connection.prepareStatement(query);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Produit produit = new Produit();
+                    produit.setId(resultSet.getInt("ID_Produit"));
+                    produit.setNom(resultSet.getString("nom"));
+                    produit.setMarque(resultSet.getString("marque"));
+                    produit.setDescription(resultSet.getString("description"));
+                    produit.setPrix(resultSet.getString("prix"));
+                    produit.setMotsCles(resultSet.getString("motCles"));
+                    produit.setUrlPicture(resultSet.getString("urlPicture"));
+                    return produit;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return null; // Si aucun produit correspondant à la recherche
+    }
+
+    public boolean checkAdminCredentials(String email, String motDePasse) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM administrateur WHERE email = ? AND motDePasse = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, motDePasse);
+                resultSet = preparedStatement.executeQuery();
+
+                // Si la requête renvoie des résultats, alors les informations d'identification sont correctes
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        // Si la requête ne renvoie pas de résultats ou s'il y a une erreur, les informations d'identification sont incorrectes
+        return false;
+    }
+
+    public boolean checkModeratorCredentials(String email, String motDePasse) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM moderateur WHERE email = ? AND motDePasse = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, motDePasse);
+                resultSet = preparedStatement.executeQuery();
+
+                // Si la requête renvoie des résultats, alors les informations d'identification sont correctes
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        // Si la requête ne renvoie pas de résultats ou s'il y a une erreur, les informations d'identification sont incorrectes
+        return false;
+    }
+
+    public boolean insertProduit(String nom, double prix, String marque, String description, String urlPicture, String motsCles) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "INSERT INTO produit(nom, marque, description, prix, urlPicture, motsCles) VALUES (?, ?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, nom);
+                preparedStatement.setString(2, marque);
+                preparedStatement.setString(3, description);
+                preparedStatement.setDouble(4, prix);
+                preparedStatement.setString(5, urlPicture);
+                preparedStatement.setString(6, motsCles);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return false;
+    }
+
+    public boolean deleteProduit(int productId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "DELETE FROM produit WHERE ID_Produit=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, productId);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return false;
+    }
+
+    public boolean updateProduit(Produit produit) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "UPDATE produit SET nom=?, marque=?, description=?, prix=?, urlPicture=? WHERE ID_Produit=?";
+                preparedStatement = connection.prepareStatement(query);
+
+                preparedStatement.setString(1, produit.getNom());
+                preparedStatement.setString(2, produit.getMarque());
+                preparedStatement.setString(3, produit.getDescription());
+                preparedStatement.setString(4, produit.getPrix());
+                preparedStatement.setString(5, produit.getUrlPicture());
+                //preparedStatement.setString(6, produit.getMotCles());
+                preparedStatement.setInt(6, produit.getId());
+
+                // Exécuter la mise à jour
+                preparedStatement.executeUpdate();
+
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermer les ressources
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+        return false;
+    }
+
+    public Moderateur getModeratorById(int moderatorId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM moderateur WHERE ID_Moderateur=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, moderatorId);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Moderateur moderateur = new Moderateur();
+                    moderateur.setId(resultSet.getInt("ID_Moderateur"));
+                    moderateur.setAjouterProduit(resultSet.getBoolean("ajouterProduit"));
+                    moderateur.setSupprimerProduit(resultSet.getBoolean("supprimerProduit"));
+                    moderateur.setModifierProduit(resultSet.getBoolean("modifierProduit"));
+                    return moderateur;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return null; // Si aucun modérateur correspondant à l'ID n'est trouvé.
+    }
+
+    public Moderateur getModeratorByEmail(String email) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT * FROM moderateur WHERE email=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, email);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Moderateur moderateur = new Moderateur();
+                    moderateur.setId(resultSet.getInt("ID_Moderateur"));
+                    moderateur.setAjouterProduit(resultSet.getBoolean("ajouterProduit"));
+                    moderateur.setSupprimerProduit(resultSet.getBoolean("supprimerProduit"));
+                    moderateur.setModifierProduit(resultSet.getBoolean("modifierProduit"));
+                    return moderateur;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return null; // Si aucun modérateur correspondant à l'email n'est trouvé.
+    }
+
+    public boolean insertModerator(String nom, String prenom, String email, String motDePasse,
+                                   boolean ajouterProduit, boolean supprimerProduit, boolean modifierProduit) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "INSERT INTO moderateur(nom, prenom, email, motDePasse, ajouterProduit, supprimerProduit, modifierProduit) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, nom);
+                preparedStatement.setString(2, prenom);
+                preparedStatement.setString(3, email);
+                preparedStatement.setString(4, motDePasse);
+                preparedStatement.setBoolean(5, ajouterProduit);
+                preparedStatement.setBoolean(6, supprimerProduit);
+                preparedStatement.setBoolean(7, modifierProduit);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return false;
+    }
+
+
+    public boolean deleteModerator(int moderatorId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "DELETE FROM moderateur WHERE ID_Moderateur=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, moderatorId);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+
+        return false;
+    }
+    public boolean updateModerator(Moderateur moderateur) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "UPDATE moderateur SET ajouterProduit=?, supprimerProduit=?, modifierProduit=? WHERE ID_Moderateur=?";
+                preparedStatement = connection.prepareStatement(query);
+
+                preparedStatement.setBoolean(1, moderateur.isAjouterProduit());
+                preparedStatement.setBoolean(2, moderateur.isSupprimerProduit());
+                preparedStatement.setBoolean(3, moderateur.isModifierProduit());
+                preparedStatement.setInt(4, moderateur.getId());
+
+                // Exécuter la mise à jour
+                preparedStatement.executeUpdate();
+
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermer les ressources
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            closeConnection(connection);
+        }
+        return false;
+    }
+
 
     public boolean insertClient(String nom, String prenom, String email, String motDePasse, boolean verifSolde) {
         Connection connection = null;
@@ -503,7 +981,7 @@ public class DataBaseController {
 
             connection = connectToDatabase();
 
-                    String sql = "INSERT INTO details_commande (ID_Commande, ID_Produit, ID_Variante, quantite) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO details_commande (ID_Commande, ID_Produit, ID_Variante, quantite) VALUES (?, ?, ?, ?)";
 
             statement = connection.prepareStatement(sql);
             statement.setInt(1, idCommande);
