@@ -29,4 +29,4 @@ public class AccueilServlet extends HttpServlet {
         request.setAttribute("catalogue", catalogue);
         request.getRequestDispatcher("/catalogue.jsp").forward(request, response);
     }
-    }
+}
