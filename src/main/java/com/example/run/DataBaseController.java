@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.sql.Statement;
+import java.sql.ResultSet;
 public class DataBaseController {
 
 
@@ -461,6 +465,73 @@ public class DataBaseController {
         }
 
         return client;
+    }
+
+
+    public int creerCommande(int idClient) {
+        String query = "INSERT INTO commande (ID_Client, date_commande, statut) VALUES (?, ?, ?)";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = formatter.format(date);
+        String statut = "en attente";
+
+        try (Connection connection = connectToDatabase();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setInt(1, idClient);
+            preparedStatement.setString(2, formattedDate);
+            preparedStatement.setString(3, statut);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Récupère la première colonne des clés générées, normalement l'ID_Commande
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // En cas d'échec
+    }
+
+    public void creerDetailCommande(int idCommande, int idProduit, int idVariante, int quantite) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = connectToDatabase();
+
+                    String sql = "INSERT INTO details_commande (ID_Commande, ID_Produit, ID_Variante, quantite) VALUES (?, ?, ?, ?)";
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idCommande);
+            statement.setInt(2, idProduit);
+            statement.setInt(3, idVariante);
+            statement.setInt(4, quantite);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // À personnaliser pour la gestion des exceptions
+        } finally {
+            // Fermer la connexion et les ressources
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
