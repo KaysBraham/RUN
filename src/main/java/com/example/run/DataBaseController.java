@@ -8,13 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.sql.Statement;
+import java.sql.ResultSet;
 public class DataBaseController {
 
 
     public Connection connectToDatabase() {
         String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
-        String dbPassword = "";
+        String dbPassword = "root";
 
         Connection connection = null;
 
@@ -166,7 +170,9 @@ public class DataBaseController {
 
         return null; // Si aucun produit correspondant à l'ID n'est trouvé.
     }
-    public Produit getProductByKeyWord(String keyWord) {
+    public List<Produit> getProductBySearch(String search) {
+
+        List<Produit> produits = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -174,21 +180,27 @@ public class DataBaseController {
         try {
             connection = connectToDatabase();
             if (connection != null) {
-                String query = "SELECT * FROM produit WHERE motCles '%keyWord%' ";
+                String query = "SELECT * FROM produit WHERE nom LIKE ? OR motsCles LIKE ? OR marque LIKE ?";
                 preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, "%" + search + "%");
+                preparedStatement.setString(2, "%" + search + "%");
+                preparedStatement.setString(3, "%" + search + "%");
                 resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     Produit produit = new Produit();
                     produit.setId(resultSet.getInt("ID_Produit"));
                     produit.setNom(resultSet.getString("nom"));
                     produit.setMarque(resultSet.getString("marque"));
                     produit.setDescription(resultSet.getString("description"));
+                    produit.setMotsCles(resultSet.getString("motsCles"));
                     produit.setPrix(resultSet.getString("prix"));
-                    produit.setMotCles(resultSet.getString("motCles"));
                     produit.setUrlPicture(resultSet.getString("urlPicture"));
-                    return produit;
+
+                    produits.add(produit);
                 }
+
+                return produits;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -210,8 +222,9 @@ public class DataBaseController {
             closeConnection(connection);
         }
 
-        return null; // Si aucun produit correspondant à la recherche
+        return null; // Si aucun produit ne correspond à la recherche
     }
+
     public boolean checkLogin(String email, String motDePasse) throws SQLException {
         String sql = "SELECT COUNT(*) FROM client WHERE email = ? AND motDePasse = ?";
         try (Connection conn = connectToDatabase();
@@ -325,6 +338,200 @@ public class DataBaseController {
         }
 
         return variantes;
+    }
+
+    public String getImageUrlFromProductId(int productId) {
+        String imageUrl = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = connectToDatabase();
+            String query = "SELECT urlPicture FROM produit WHERE ID_Produit = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, productId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                imageUrl = rs.getString("urlPicture");
+            }
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return imageUrl;
+    }
+
+    public int getProductIdFromVarianteId(int idVariante)  {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int idProduit = 0;
+
+        try {
+            conn =  connectToDatabase();// Obtenez la connexion à la base de données ici
+
+            // Écrivez votre requête SQL pour récupérer l'ID du produit en fonction de l'ID de la variante
+            String sql = "SELECT ID_Produit FROM variantes_produit WHERE ID_Variante = ?";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idVariante);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                idProduit = resultSet.getInt("ID_Produit");
+                return idProduit;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérez les exceptions ici
+        }
+
+        // Retournez -1 ou une valeur par défaut si l'ID du produit n'est pas trouvé
+        return -1;
+    }
+
+    public int getPointureFromVarianteId(int idVariante)  {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int pointure = 0;
+
+        try {
+            conn =  connectToDatabase();
+
+
+            String sql = "SELECT pointure FROM variantes_produit WHERE ID_Variante = ?";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, idVariante);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                pointure = resultSet.getInt("pointure");
+                return pointure;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérez les exceptions ici
+        }
+
+        // Retournez -1 ou une valeur par défaut si l'ID du produit n'est pas trouvé
+        return -1;
+    }
+
+    public Client getClientById(int clientId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Client client = null;
+
+        try {
+            connection = connectToDatabase();
+
+            String query = "SELECT * FROM client WHERE ID_Client = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, clientId);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                client = new Client();
+                client.setId(resultSet.getInt("ID_Client"));
+                client.setNom(resultSet.getString("nom"));
+                client.setPrenom(resultSet.getString("prenom"));
+                client.setEmail(resultSet.getString("email"));
+                client.setSoldeFidelite(resultSet.getInt("soldeFidelite"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gestion des erreurs
+        } finally {
+
+        }
+
+        return client;
+    }
+
+
+    public int creerCommande(int idClient) {
+        String query = "INSERT INTO commande (ID_Client, date_commande, statut) VALUES (?, ?, ?)";
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = formatter.format(date);
+        String statut = "en attente";
+
+        try (Connection connection = connectToDatabase();
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setInt(1, idClient);
+            preparedStatement.setString(2, formattedDate);
+            preparedStatement.setString(3, statut);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Récupère la première colonne des clés générées, normalement l'ID_Commande
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // En cas d'échec
+    }
+
+    public void creerDetailCommande(int idCommande, int idProduit, int idVariante, int quantite) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = connectToDatabase();
+
+                    String sql = "INSERT INTO details_commande (ID_Commande, ID_Produit, ID_Variante, quantite) VALUES (?, ?, ?, ?)";
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idCommande);
+            statement.setInt(2, idProduit);
+            statement.setInt(3, idVariante);
+            statement.setInt(4, quantite);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // À personnaliser pour la gestion des exceptions
+        } finally {
+            // Fermer la connexion et les ressources
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

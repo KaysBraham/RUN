@@ -18,7 +18,7 @@
 <div class="swiper mySwiper relative flex items-center justify-center" >
     <div class="swiper-wrapper">
         <div class="swiper-slide">
-            <a href="catalogue.jsp">
+            <a href="catalogue">
             <img
                     class="w-full h-full object-center object-cover"
                     src="https://media.gqmagazine.fr/photos/637507a363f0b8424cf4c1d6/16:9/w_1920,c_limit/Montage_Sneakers_V2_2.jpg"

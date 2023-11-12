@@ -8,12 +8,12 @@
         <welcome-file>accueil.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
-        <servlet-name>ProduitsServlet</servlet-name>
+        <servlet-name>CatalogueServlet</servlet-name>
         <servlet-class>com.example.run.CatalogueServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ProduitsServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>CatalogueServlet</servlet-name>
+        <url-pattern>/catalogue</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -31,4 +31,37 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>com.example.run.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/AddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ViderPanierServlet</servlet-name>
+        <servlet-class>com.example.run.ViderPanierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViderPanierServlet</servlet-name>
+        <url-pattern>/ViderPanierServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteFromCartServlet</servlet-name>
+        <servlet-class>com.example.run.DeleteFromCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFromCartServlet</servlet-name>
+        <url-pattern>/DeleteFromCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RechercheServlet</servlet-name>
+        <servlet-class>com.example.run.RechercheServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RechercheServlet</servlet-name>
+        <url-pattern>/RechercheServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

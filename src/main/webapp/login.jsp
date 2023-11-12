@@ -70,7 +70,7 @@
 
 
 
-<<script>
+<script>
 
     const monSVG = document.getElementById("SVG");
 
