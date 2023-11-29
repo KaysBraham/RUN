@@ -1012,4 +1012,63 @@ public class DataBaseController {
         }
     }
 
+    public List<Commande> getCommandesByClientId(int idClient) {
+        List<Commande> commandes = new ArrayList<>();
+        String query = "SELECT * FROM commande WHERE ID_Client = ?";
+
+        try (Connection connection = connectToDatabase();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, idClient);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Récupérer les informations de chaque commande depuis le résultat de la requête
+                    int idCommande = resultSet.getInt("ID_Commande");
+                    String dateCommande = resultSet.getString("date_commande");
+                    String statut = resultSet.getString("statut");
+
+                    // Créer une instance de la classe Commande pour chaque résultat
+                    Commande commande = new Commande(idCommande, idClient, dateCommande, statut);
+
+                    // Ajouter la commande à la liste
+                    commandes.add(commande);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return commandes;
+    }
+
+
+
+    public List<DetailsCommande> getDetailsCommandeByCommandeId(int idCommande) {
+        List<DetailsCommande> detailsCommandes = new ArrayList<>();
+        String query = "SELECT * FROM details_commande WHERE ID_Commande = ?";
+
+        try (Connection connection = connectToDatabase();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, idCommande);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int idDetail = resultSet.getInt("ID_Detail");
+                    int idProduit = resultSet.getInt("ID_Produit");
+                    int idVariante = resultSet.getInt("ID_Variante");
+                    int quantite = resultSet.getInt("quantite");
+
+                    DetailsCommande detailsCommande = new DetailsCommande(idDetail, idCommande, idProduit, idVariante, quantite);
+                    detailsCommandes.add(detailsCommande);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return detailsCommandes;
+    }
+
 }

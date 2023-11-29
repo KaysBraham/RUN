@@ -19,30 +19,30 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide">
             <a href="catalogue">
-            <img
-                    class="w-full h-full object-center object-cover"
-                    src="https://media.gqmagazine.fr/photos/637507a363f0b8424cf4c1d6/16:9/w_1920,c_limit/Montage_Sneakers_V2_2.jpg"
-                    alt="image"
-            />
+                <img
+                        class="w-full h-full object-center object-cover"
+                        src="https://media.gqmagazine.fr/photos/637507a363f0b8424cf4c1d6/16:9/w_1920,c_limit/Montage_Sneakers_V2_2.jpg"
+                        alt="image"
+                />
             </a>
         </div>
 
         <div class="swiper-slide">
             <a href="produit.jsp?id=18">
-            <img
-                    class="w-full h-full object-center object-cover"
-                    src="https://img.hardloop.com/image/upload/v1606748997/articles/id-699-8-bonnes-raisons-de-porter-des-chaussettes-en-laine-merinos/les%20chaussettes%20en%20laine%20mérinos%20icebreaker.jpg"
-                    alt="image"
-            />
+                <img
+                        class="w-full h-full object-center object-cover"
+                        src="https://img.hardloop.com/image/upload/v1606748997/articles/id-699-8-bonnes-raisons-de-porter-des-chaussettes-en-laine-merinos/les%20chaussettes%20en%20laine%20mérinos%20icebreaker.jpg"
+                        alt="image"
+                />
             </a>
         </div>
         <div class="swiper-slide">
             <a href="produit.jsp?id=15">
-            <img
-                    class="w-full h-full object-center object-cover"
-                    src="https://kikikickz.com/cdn/shop/articles/10-sneakers-a-saisir-pendant-nos-soldes-518234_800x.progressive.webp.jpg?v=1696270866"
-                    alt="image"
-            />
+                <img
+                        class="w-full h-full object-center object-cover"
+                        src="https://kikikickz.com/cdn/shop/articles/10-sneakers-a-saisir-pendant-nos-soldes-518234_800x.progressive.webp.jpg?v=1696270866"
+                        alt="image"
+                />
             </a>
         </div>
     </div>

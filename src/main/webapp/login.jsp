@@ -1,5 +1,5 @@
 
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,9 +14,11 @@
 
 
 <form action="LoginServlet" method="post" onsubmit="masquerErreur()">
-    <div class="min-h-screen max-h-fit bg-gray-500 flex justify-center items-center relative overflow-hidden">
-        <div class="absolute w-60 h-60 rounded-xl bg-gray-900 -top-5 -left-16 z-0 transform rotate-45 hidden md:block"></div>
-        <div class="absolute w-48 h-48 rounded-xl bg-gray-900 -bottom-6 -right-10 transform rotate-12 hidden md:block"></div>
+    <div class="min-h-screen bg-gray-500 flex justify-center items-center">
+        <div class="absolute w-60 h-60 rounded-xl bg-gray-900 -top-5 -left-16 z-0 transform rotate-45 hidden md:block">
+        </div>
+        <div class="absolute w-48 h-48 rounded-xl bg-gray-900 -bottom-6 -right-10 transform rotate-12 hidden md:block">
+        </div>
         <div class="py-12 px-12 bg-white rounded-2xl shadow-xl z-20">
             <div class="flex flex-col items-center justify-center">
                 <img src="https://i.ibb.co/JtpTTFt/run-black.png" class="text-center mb-4 w-1/2" alt="Run Logo">

@@ -35,6 +35,6 @@ public class GetProductDetailsServlet extends HttpServlet {
 
     private String convertToJson(Produit product) {
         return String.format("{\"id\":%d,\"nom\":\"%s\",\"prix\":\"%s\",\"marque\":\"%s\",\"description\":\"%s\",\"urlPicture\":\"%s\",\"motsCles\":\"%s\"}",
-                product.getId(), product.getNom(), product.getPrix(), product.getMarque(), product.getDescription(), product.getUrlPicture(), product.getMotCles());
+                product.getId(), product.getNom(), product.getPrix(), product.getMarque(), product.getDescription(), product.getUrlPicture(), product.getMotsCles());
     }
 }

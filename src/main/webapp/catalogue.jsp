@@ -12,7 +12,7 @@
 <body>
 <%@include file="header.jsp" %>
 
-<div class="min-h-screen bg-gray-100 flex flex-col py-20 px-20">
+<div class="min-h-screen bg-gray-100 flex flex-col py-20 px-20 pt-48">
 
     <h1 class="mb-8  text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight p-3 justify-center mx-auto">
         <span></span> <span class="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gray-900 lg:inline">Sneakers</span>
@@ -26,13 +26,13 @@
         <div class="relative w-44 h-99 bg-white shadow-md rounded-3xl p-2">
             <div class="overflow-x-hidden rounded-2xl relative">
                 <a href="produit.jsp?id=<%= produit.getId() %>">
-                <img class="h-40 w-40 rounded-2xl object-cover m-0" src="<%= produit.getUrlPicture() %>"></a>
+                    <img class="h-40 w-40 rounded-2xl object-cover m-0" src="<%= produit.getUrlPicture() %>"></a>
 
             </div>
             <div class="mt-4 pl-2 mb-2 flex justify-between ">
                 <div>
                     <a href="produit.jsp?id=<%= produit.getId() %>">
-                    <p class="text-lg font-semibold text-gray-900 mb-0 overflow-hidden max-h-16"><%= produit.getNom() %></p>
+                        <p class="text-lg font-semibold text-gray-900 mb-0 overflow-hidden max-h-16"><%= produit.getNom() %></p>
                     </a>
                     <p class="text-md text-gray-800 mt-0 overflow-hidden max-h-10"><%= produit.getPrix() %>€</p>
                 </div>

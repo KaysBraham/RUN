@@ -143,4 +143,12 @@
         <servlet-name>EditModeratorServlet</servlet-name>
         <url-pattern>/EditModeratorServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreerCommandeServlet</servlet-name>
+        <servlet-class>com.example.run.CreerCommandeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreerCommandeServlet</servlet-name>
+        <url-pattern>/CreerCommandeServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

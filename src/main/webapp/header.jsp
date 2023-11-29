@@ -55,7 +55,11 @@
             </ul>
         </div>
 
-        <div class="md:order-3 md:w-auto w-full md:pl-0 md:ml-4 mt-4 md:mt-0">
+
+    </div>
+
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div class=" w-full md:pl-0 md:ml-4 mt-4 md:mt-0">
             <form action="recherche" method="get" class="relative">
                 <input type="text" name="recherche" class="w-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded-md py-2 pl-10 pr-4" placeholder="Rechercher...">
                 <button type="submit" class="absolute top-0 left-0 mt-2 ml-2">

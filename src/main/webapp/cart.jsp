@@ -135,13 +135,13 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
         <div class="flex justify-end space-x-4  border-gray-100 px-5 py-4 text-2xl font-bold">
           <a href="panier.jsp">
-          <div class="text-blue-600"><button
-                  class="group relative h-12 w-48 overflow-hidden rounded-2xl bg-gray-900 text-lg font-bold text-white">
-            Commander
-            <div
-                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-            </div>
-          </button></div>
+            <div class="text-blue-600"><button
+                    class="group relative h-12 w-48 overflow-hidden rounded-2xl bg-gray-900 text-lg font-bold text-white">
+              Commander
+              <div
+                      class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
+              </div>
+            </button></div>
           </a>
 
         </div>
@@ -169,29 +169,29 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
 
   function retirerDuPanier(idVariante) {
 
-      var element = document.getElementById(idVariante);
-      if (element) {
-          element.remove();
+    var element = document.getElementById(idVariante);
+    if (element) {
+      element.remove();
 
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'DeleteFromCartServlet', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4) {
-            console.log("Code d'état HTTP : " + xhr.status); // Affichez le code d'état HTTP dans la console
-            if (xhr.status === 200) {
-              console.log("Action effectuée avec succès");
-            } else if (xhr.status === 400) {
-              console.log("Erreur : Requête incorrecte (code d'état 400)");
-            } else {
-              console.log("Erreur inconnue : Code d'état " + xhr.status);
-            }
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'DeleteFromCartServlet', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          console.log("Code d'état HTTP : " + xhr.status); // Affichez le code d'état HTTP dans la console
+          if (xhr.status === 200) {
+            console.log("Action effectuée avec succès");
+          } else if (xhr.status === 400) {
+            console.log("Erreur : Requête incorrecte (code d'état 400)");
+          } else {
+            console.log("Erreur inconnue : Code d'état " + xhr.status);
           }
-        };
-        xhr.send('idVariante=' + idVariante); // Supprimez "action=" de la requête
+        }
+      };
+      xhr.send('idVariante=' + idVariante); // Supprimez "action=" de la requête
 
-      }
+    }
 
 
   }
