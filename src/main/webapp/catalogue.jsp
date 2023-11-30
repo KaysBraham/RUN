@@ -22,7 +22,7 @@
     </h1>
     <div class="flex">
         <!-- Panneau de filtres -->
-        <div class="w-1/4 p-4 bg-gray-100 rounded">
+        <div class="w-1/6 p-4 bg-gray-100 rounded">
             <form action="catalogue" method="get">
                 <div class="mb-6">
                     <h2 class="text-lg font-bold mb-2">Filtrer par Marque</h2>
@@ -61,7 +61,7 @@
                 <button type="submit" class="bg-gray-900 text-white py-2 px-4 rounded w-full">Appliquer les filtres</button>
             </form>
         </div>
-    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-auto justify-center ">
+    <div class="relative m-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mx-auto justify-center ">
         <%
             List<Produit> catalogue = (List<Produit>) request.getAttribute("catalogue");
             if (!catalogue.isEmpty()) {
