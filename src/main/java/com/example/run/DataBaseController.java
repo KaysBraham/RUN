@@ -18,7 +18,7 @@ public class DataBaseController {
     public Connection connectToDatabase() {
         String dbUrl = "jdbc:mysql://localhost:3306/rundb"; // Mettez à jour avec votre propre URL de base de données.
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "";
 
         Connection connection = null;
 
@@ -701,6 +701,94 @@ public class DataBaseController {
         }
 
         return null; // Si aucun produit ne correspond à la recherche
+    }
+    public List<String> getAllDistinctMarques() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<String> marques = new ArrayList<>();
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                String query = "SELECT DISTINCT marque FROM produit";
+                preparedStatement = connection.prepareStatement(query);
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    marques.add(resultSet.getString("marque"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermer les ressources
+            closeConnection(connection);
+        }
+
+        return marques;
+    }
+
+    public List<Produit> getFilteredProducts(String marque, String couleur, String genre) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Produit> produits = new ArrayList<>();
+
+        try {
+            connection = connectToDatabase();
+            if (connection != null) {
+                // Construire la requête SQL en fonction des filtres sélectionnés
+                StringBuilder queryBuilder = new StringBuilder("SELECT * FROM produit WHERE 1=1");
+
+                if (marque != null && !marque.isEmpty()) {
+                    queryBuilder.append(" AND marque = ?");
+                }
+
+                if (couleur != null && !couleur.isEmpty()) {
+                    queryBuilder.append(" AND motsCles LIKE ?");
+                }
+
+                if (genre != null && !genre.isEmpty()) {
+                    queryBuilder.append(" AND motsCles LIKE ?");
+                }
+
+                preparedStatement = connection.prepareStatement(queryBuilder.toString());
+
+                // Paramètres de la requête en fonction des filtres sélectionnés
+                int parameterIndex = 1;
+                if (marque != null && !marque.isEmpty()) {
+                    preparedStatement.setString(parameterIndex++, "%"+marque+"%");
+                }
+
+                if (couleur != null && !couleur.isEmpty()) {
+                    preparedStatement.setString(parameterIndex++, "%"+couleur+"%");
+                }
+
+                if (genre != null && !genre.isEmpty()) {
+                    preparedStatement.setString(parameterIndex++, "%"+genre+"%");
+                }
+
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    Produit produit = new Produit();
+                    produit.setId(resultSet.getInt("ID_Produit"));
+                    produit.setNom(resultSet.getString("nom"));
+                    produit.setMarque(resultSet.getString("marque"));
+                    produit.setDescription(resultSet.getString("description"));
+                    produit.setPrix(resultSet.getString("prix"));
+                    produit.setUrlPicture(resultSet.getString("urlPicture"));
+                    produits.add(produit);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection);
+        }
+
+        return produits;
     }
 
     public boolean checkLogin(String email, String motDePasse) throws SQLException {

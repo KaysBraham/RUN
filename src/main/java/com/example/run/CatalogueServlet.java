@@ -16,7 +16,10 @@ public class CatalogueServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DataBaseController controller = new DataBaseController();
-        List<Produit> catalogue = controller.getCatalogue();
+        String marque = request.getParameter("marque");
+        String couleur = request.getParameter("couleur");
+        String genre = request.getParameter("genre");
+        List<Produit> catalogue = controller.getFilteredProducts(marque,couleur,genre);
 
         request.setAttribute("catalogue", catalogue);
 
