@@ -758,7 +758,7 @@ public class DataBaseController {
                 // Paramètres de la requête en fonction des filtres sélectionnés
                 int parameterIndex = 1;
                 if (marque != null && !marque.isEmpty()) {
-                    preparedStatement.setString(parameterIndex++, "%"+marque+"%");
+                    preparedStatement.setString(parameterIndex++, marque);
                 }
 
                 if (couleur != null && !couleur.isEmpty()) {
