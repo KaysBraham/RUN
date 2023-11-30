@@ -40,14 +40,21 @@
                 <li>
                     <a href="accueil.jsp" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0" aria-current="page">Accueil</a>
                 </li>
+                <li class="group relative">
+                <a href="catalogue" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 group" id="sneakersDropdown">
+                    Sneakers
+                    <svg class="w-5 h-5 ml-2 -mr-1 inline " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+                <ul class="absolute hidden bg-white border border-gray-100 mt-2 space-y-2 py-2 rounded- z-30" id="sneakersDropdownContent">
+                    <li><a href="catalogue?genre=Femme" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Femme</a></li>
+                    <li><a href="catalogue?genre=Homme" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Homme</a></li>
+                    <li><a href="catalogue?genre=Enfant" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Enfant</a></li>
+                </ul>
+            </li>
                 <li>
-                    <a href="catalogue" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0" aria-current="page">Sneakers</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Bottes</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Accessoires</a>
+                    <a href="catalogue?genre=Chaussette" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Accessoires</a>
                 </li>
                 <li>
                     <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Contact</a>
@@ -72,3 +79,31 @@
 
     </div>
 </nav>
+
+<script>
+    // JavaScript pour gérer le dropdown
+    const sneakersDropdown = document.getElementById("sneakersDropdown");
+    const sneakersDropdownContent = document.getElementById("sneakersDropdownContent");
+    let dropdownTimeout;
+
+    sneakersDropdown.addEventListener("mouseover", function () {
+        clearTimeout(dropdownTimeout);
+        sneakersDropdownContent.classList.remove("hidden");
+    });
+
+    sneakersDropdown.addEventListener("mouseout", function () {
+        dropdownTimeout = setTimeout(function () {
+            sneakersDropdownContent.classList.add("hidden");
+        }, 300); // ajustez le délai en millisecondes selon vos préférences
+    });
+
+    sneakersDropdownContent.addEventListener("mouseover", function () {
+        clearTimeout(dropdownTimeout);
+    });
+
+    sneakersDropdownContent.addEventListener("mouseout", function () {
+        dropdownTimeout = setTimeout(function () {
+            sneakersDropdownContent.classList.add("hidden");
+        }, 300); // ajustez le délai en millisecondes selon vos préférences
+    });
+</script>
