@@ -750,7 +750,7 @@ public class DataBaseController {
                 }
 
                 if (genre != null && !genre.isEmpty()) {
-                    queryBuilder.append(" AND motsCles LIKE ?");
+                    queryBuilder.append(" AND (motsCles LIKE ? OR nom LIKE ?)");
                 }
 
                 preparedStatement = connection.prepareStatement(queryBuilder.toString());
@@ -766,6 +766,7 @@ public class DataBaseController {
                 }
 
                 if (genre != null && !genre.isEmpty()) {
+                    preparedStatement.setString(parameterIndex++, "%"+genre+"%");
                     preparedStatement.setString(parameterIndex++, "%"+genre+"%");
                 }
 
