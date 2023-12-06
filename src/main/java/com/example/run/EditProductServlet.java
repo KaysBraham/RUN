@@ -15,7 +15,7 @@ public class EditProductServlet extends HttpServlet {
         String marque = request.getParameter("marqueModif");
         String description = request.getParameter("descriptionModif");
         String urlPicture = request.getParameter("urlPictureModif");
-        // String motsCles = request.getParameter("motsCles");
+        String motsCles = request.getParameter("motsCles");
 
         try {
             String message;
@@ -29,7 +29,7 @@ public class EditProductServlet extends HttpServlet {
                 produit.setMarque(marque);
                 produit.setDescription(description);
                 produit.setUrlPicture(urlPicture);
-                // produit.setMotCles(motsCles);
+                produit.setMotsCles(motsCles);
 
                 if (controller.updateProduit(produit)) {
                     message = "Produit mis a jour avec succes";

@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GetProductDetailsServlet extends HttpServlet {
 
@@ -20,7 +22,7 @@ public class GetProductDetailsServlet extends HttpServlet {
             // Convertir le produit en JSON
             String productJson = convertToJson(product);
 
-            // Envoyer la réponse JSON au client
+            // Envoyer la réponse JSON
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             out.print(productJson);
@@ -34,7 +36,9 @@ public class GetProductDetailsServlet extends HttpServlet {
     }
 
     private String convertToJson(Produit product) {
-        return String.format("{\"id\":%d,\"nom\":\"%s\",\"prix\":\"%s\",\"marque\":\"%s\",\"description\":\"%s\",\"urlPicture\":\"%s\",\"motsCles\":\"%s\"}",
-                product.getId(), product.getNom(), product.getPrix(), product.getMarque(), product.getDescription(), product.getUrlPicture(), product.getMotsCles());
+        Gson gson = new GsonBuilder().create();
+        String productJson = gson.toJson(product);
+
+        return productJson;
     }
 }

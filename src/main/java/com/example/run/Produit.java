@@ -6,7 +6,7 @@ public class Produit {
     private String description;
     private String prix;
 
-    private String motCles;
+    private String motsCles;
     private String urlPicture;
 
     public int getId() {
@@ -57,8 +57,8 @@ public class Produit {
         this.urlPicture = urlPicture;
     }
 
-    public String getMotsCles() { return motCles; }
+    public String getMotsCles() { return motsCles; }
 
-    public void setMotsCles(String motCles) { this.motCles= motCles; }
+    public void setMotsCles(String motsCles) { this.motsCles= motsCles; }
 
 }
