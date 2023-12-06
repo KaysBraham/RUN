@@ -213,7 +213,7 @@
                         </div>
                         <div class="mb-6">
                             <label for="marqueModif" class="block text-gray-700 text-sm font-bold mb-2">Marque du Produit</label>
-                            <input type="text" id="marqueModif" name="marqueModif" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                            <input type="text" id="marqueModif" name="marqueModif" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
                         </div>
                         <div class="mb-6">
                             <label for="descriptionModif" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
@@ -221,11 +221,11 @@
                         </div>
                         <div class="mb-6">
                             <label for="urlPictureModif" class="block text-gray-700 text-sm font-bold mb-2">URL de l'Image</label>
-                            <input type="url" id="urlPictureModif" name="urlPictureModif" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                            <input type="url" id="urlPictureModif" name="urlPictureModif" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
                         </div>
                         <div class="mb-6">
                             <label for="motsClesModif" class="block text-gray-700 text-sm font-bold mb-2">Mots Clés</label>
-                            <input type="text" id="motsClesModif" name="motsCles" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                            <input type="text" id="motsClesModif" name="motsCles" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
                         </div>
                     </div>
 
