@@ -293,7 +293,7 @@ public class DataBaseController {
         try {
             connection = connectToDatabase();
             if (connection != null) {
-                String query = "UPDATE produit SET nom=?, marque=?, description=?, prix=?, urlPicture=? WHERE ID_Produit=?";
+                String query = "UPDATE produit SET nom=?, marque=?, description=?, prix=?, urlPicture=?, motsCLes=? WHERE ID_Produit=?";
                 preparedStatement = connection.prepareStatement(query);
 
                 preparedStatement.setString(1, produit.getNom());
@@ -301,8 +301,8 @@ public class DataBaseController {
                 preparedStatement.setString(3, produit.getDescription());
                 preparedStatement.setString(4, produit.getPrix());
                 preparedStatement.setString(5, produit.getUrlPicture());
-                //preparedStatement.setString(6, produit.getMotCles());
-                preparedStatement.setInt(6, produit.getId());
+                preparedStatement.setString(6, produit.getMotsCles());
+                preparedStatement.setInt(7, produit.getId());
 
                 // Exécuter la mise à jour
                 preparedStatement.executeUpdate();
@@ -623,6 +623,7 @@ public class DataBaseController {
                     produit.setDescription(resultSet.getString("description"));
                     produit.setPrix(resultSet.getString("prix"));
                     produit.setUrlPicture(resultSet.getString("urlPicture"));
+                    produit.setMotsCles(resultSet.getString("motsCles"));
                     return produit;
                 }
             }
