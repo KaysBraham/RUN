@@ -181,6 +181,7 @@
                     <div class="mb-6">
                         <label for="produitASupprimer" class="block text-gray-700 text-sm font-bold mb-2">Produit à Supprimer</label>
                         <select id="produitASupprimer" name="produitASupprimer" class="w-full h-1/4 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
+                            <option value="" selected disabled>Sélectionnez un produit</option>
                             <% for (Produit product : catalogue) { %>
                             <option value="<%= product.getId() %>"><%= product.getNom() %></option>
                             <% } %>
@@ -280,6 +281,7 @@
                     <div class="mb-6">
                         <label for="moderateurASupprimer" class="block text-gray-700 text-sm font-bold mb-2">Modérateur à Supprimer</label>
                         <select id="moderateurASupprimer" name="moderateurASupprimer" class="w-full h-1/4 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
+                            <option value="" selected disabled>Sélectionnez un modérateur</option>
                             <% for (Moderateur moderateur : moderateurs) { %>
                             <option value="<%= moderateur.getId() %>"><p><%= moderateur.getPrenom()%> <%= moderateur.getNom() %></p></option>
                             <% } %>
