@@ -121,7 +121,24 @@ flex items-center justify-center z-20" style="display: none;" id="resume">
                 }
               }
             %>
+            <tr id="total">
 
+              <td class="p-2">
+              </td>
+              <td class="p-2">
+              </td>
+              <td class="p-2">
+              </td>
+              <td class="p-2">
+                <div class="text-left font-semibold">Total du panier</div>
+              </td>
+              <td class="p-2">
+                <div class="text-left font-medium text-gray-900 font-bold"><%= total %> Euros</div>
+              </td>
+              <td class="p-2">
+              </td>
+
+            </tr>
 
             </tbody>
           </table>

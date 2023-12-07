@@ -110,6 +110,20 @@
 
 
             <% }} %>
+            <li class="py-3 sm:py-4">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold  truncate text-white">
+                    Total du panier
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-base font-semibold text-white">
+                  <%= total %> Euros
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
 
